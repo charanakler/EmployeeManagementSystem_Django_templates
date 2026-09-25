@@ -1,0 +1,36 @@
+:root {
+    --ink: #172033;
+    --muted: #6c7486;
+    --navy: #132c55;
+    --accent: #3d72d9;
+    --page: #f4f6fa;
+}
+
+body { background: var(--page); color: var(--ink); }
+.app-shell { min-height: 100vh; display: flex; }
+.sidebar { background: var(--navy); color: #dbe7ff; display: flex; flex-direction: column; padding: 1.5rem 1rem; width: 260px; min-height: 100vh; }
+.brand { align-items: center; color: #fff; display: flex; font-size: 1rem; font-weight: 700; gap: .7rem; line-height: 1.05; padding: .5rem; text-decoration: none; }
+.brand small { color: #aebfdf; font-size: .75rem; font-weight: 500; }
+.brand-mark { align-items: center; background: #fff; border-radius: .7rem; color: var(--navy); display: inline-flex; font-size: .78rem; height: 2.2rem; justify-content: center; width: 2.2rem; }
+.sidebar .nav-link { border-radius: .5rem; color: #c8d6f0; margin-bottom: .3rem; padding: .7rem .8rem; }
+.sidebar .nav-link:hover, .sidebar .nav-link.active { background: rgba(255,255,255,.13); color: #fff; }
+.sidebar .nav-link.disabled { color: #8395b5; cursor: default; }
+.sidebar .nav-link small { display: block; font-size: .68rem; opacity: .75; }
+.sidebar-footer { border-top: 1px solid rgba(255,255,255,.14); margin-top: auto; padding-top: 1rem; }
+.user-summary { align-items: center; display: flex; gap: .65rem; margin: 0 .45rem 1rem; }
+.user-summary strong, .user-summary small { display: block; max-width: 165px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-summary small { color: #aebfdf; font-size: .72rem; }
+.avatar { align-items: center; background: #5b88dc; border-radius: 50%; color: white; display: inline-flex; font-size: .75rem; font-weight: bold; height: 2rem; justify-content: center; width: 2rem; }
+.nav-button { background: transparent; border: 0; text-align: left; width: 100%; }
+.page-content { flex: 1; min-width: 0; padding: 2.25rem 2.75rem; }
+.page-header { margin-bottom: 2rem; }
+.eyebrow { color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.auth-page { align-items: center; display: flex; justify-content: center; min-height: 100vh; padding: 1.5rem; }
+.auth-page > .row { width: 100%; }
+
+@media (max-width: 767.98px) {
+    .app-shell { display: block; }
+    .sidebar { min-height: auto; width: 100%; }
+    .sidebar-footer { margin-top: 1rem; }
+    .page-content { padding: 1.5rem 1rem; }
+}

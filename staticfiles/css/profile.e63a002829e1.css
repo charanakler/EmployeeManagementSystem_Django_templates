@@ -1,0 +1,12 @@
+.profile-avatar {
+    align-items: center;
+    background: #dbe7ff;
+    border-radius: 50%;
+    color: #315fae;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 700;
+    height: 100px;
+    justify-content: center;
+    width: 100px;
+}

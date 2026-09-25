@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center w-100">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="h3 text-center mb-4">Employee Management System</h1>
+                {% block auth_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

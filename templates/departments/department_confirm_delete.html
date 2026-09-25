@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Department - Employee Management System
+{% endblock %}
+
+{% block page_heading %}
+Delete Department
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-body">
+
+        <h5 class="mb-3">Delete Department</h5>
+
+        <p>
+            Are you sure you want to delete the department
+            <strong>{{ department.name }}</strong>?
+        </p>
+
+        {% if employee_count > 0 %}
+
+            <div class="alert alert-warning">
+                <strong>Cannot delete this department.</strong>
+
+                <p class="mb-0 mt-2">
+                    This department currently has
+                    <strong>{{ employee_count }}</strong>
+                    employee{{ employee_count|pluralize }} assigned to it.
+                </p>
+            </div>
+
+            <a href="{% url 'departments:department_detail' department.pk %}"
+               class="btn btn-secondary">
+                Back to Department
+            </a>
+
+        {% else %}
+
+            <div class="alert alert-danger">
+                This action cannot be undone.
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Yes, Delete Department
+                </button>
+
+                <a href="{% url 'departments:department_list' %}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

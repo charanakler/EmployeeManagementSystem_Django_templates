@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Department Details - Employee Management System
+{% endblock %}
+
+{% block page_heading %}
+Department Details
+{% endblock %}
+
+{% block header_actions %}
+<a href="{% url 'departments:department_edit' department.pk %}"
+   class="btn btn-warning">
+    Edit Department
+</a>
+
+<a href="{% url 'departments:department_delete' department.pk %}"
+   class="btn btn-danger">
+    Delete
+</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4 mt-1">
+
+    <!-- Department Information -->
+    <div class="col-lg-5">
+
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+
+                <h5 class="mb-4">
+                    {{ department.name }}
+                </h5>
+
+                <div class="mb-3">
+                    <label class="text-muted small">
+                        Department Name
+                    </label>
+                    <div class="fw-semibold">
+                        {{ department.name }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-muted small">
+                        Description
+                    </label>
+
+                    <div>
+                        {% if department.description %}
+                            {{ department.description }}
+                        {% else %}
+                            <span class="text-muted">
+                                No description available.
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-muted small">
+                        Total Employees
+                    </label>
+
+                    <div>
+                        <span class="badge bg-primary">
+                            {{ employees|length }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-muted small">
+                        Created At
+                    </label>
+
+                    <div>
+                        {{ department.created_at|date:"d M Y, h:i A" }}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-muted small">
+                        Last Updated
+                    </label>
+
+                    <div>
+                        {{ department.updated_at|date:"d M Y, h:i A" }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Employees -->
+    <div class="col-lg-7">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <div>
+                        <h5 class="mb-1">
+                            Employees
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Employees assigned to this department.
+                        </p>
+                    </div>
+
+                    <span class="badge bg-primary">
+                        {{ employees|length }}
+                    </span>
+
+                </div>
+
+
+                {% if employees %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Designation</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for employee in employees %}
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ employee.employee_id }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ employee.first_name }}
+                                    {{ employee.last_name }}
+                                </td>
+
+                                <td>
+                                    {{ employee.designation }}
+                                </td>
+
+                                <td>
+
+                                    {% if employee.status == 'Active' %}
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">
+                                            Inactive
+                                        </span>
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'employees:employee_detail' employee.pk %}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="text-center py-5">
+
+                    <h6>No Employees Assigned</h6>
+
+                    <p class="text-muted mb-3">
+                        There are currently no employees in this department.
+                    </p>
+
+                    <a href="{% url 'employees:employee_add' %}"
+                       class="btn btn-primary">
+                        Add Employee
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'departments:department_list' %}"
+       class="btn btn-secondary">
+        ← Back to Departments
+    </a>
+</div>
+
+{% endblock %}

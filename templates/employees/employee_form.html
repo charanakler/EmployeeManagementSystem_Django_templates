@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Employee | Employee Management{% endblock %}
+{% block page_heading %}{% if object %}Edit employee{% else %}Add employee{% endif %}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <section class="card border-0 shadow-sm mb-4"><div class="card-body p-4"><h2 class="h5 mb-4">Personal information</h2><div class="row g-3">
+        {% for field in form %}{% if forloop.counter <= 9 %}<div class="{% if field.name == 'address' %}col-12{% else %}col-md-6{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}</div>{% endif %}{% endfor %}
+    </div></div></section>
+    <section class="card border-0 shadow-sm mb-4"><div class="card-body p-4"><h2 class="h5 mb-4">Employment information</h2><div class="row g-3">
+        {% for field in form %}{% if forloop.counter > 9 %}<div class="col-md-6"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}{% if field.name == 'profile_photo' and object.profile_photo %}<a class="d-block small mt-1" target="_blank" href="{{ object.profile_photo.url }}">View current photo</a>{% endif %}</div>{% endif %}{% endfor %}
+    </div></div></section>
+    <div class="d-flex gap-2"><button class="btn btn-primary" type="submit">{% if object %}Save changes{% else %}Add employee{% endif %}</button><a class="btn btn-outline-secondary" href="{% if object %}{% url 'employees:employee_detail' object.pk %}{% else %}{% url 'employees:employee_list' %}{% endif %}">Cancel</a></div>
+</form>
+{% endblock %}

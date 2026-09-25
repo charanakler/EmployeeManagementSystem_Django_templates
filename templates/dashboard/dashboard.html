@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard | Employee Management{% endblock %}
+
+{% block page_heading %}Dashboard{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<p class="text-muted mb-4">Welcome back, {{ request.user.get_full_name|default:request.user.username }}. Here is your workforce overview.</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <article class="stat-card">
+            <span class="stat-label">Total employees</span>
+            <strong>{{ total_employees }}</strong>
+            <span class="stat-icon blue">E</span>
+        </article>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <article class="stat-card">
+            <span class="stat-label">Active employees</span>
+            <strong>{{ active_employees }}</strong>
+            <span class="stat-icon green">A</span>
+        </article>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <article class="stat-card">
+            <span class="stat-label">Inactive employees</span>
+            <strong>{{ inactive_employees }}</strong>
+            <span class="stat-icon amber">I</span>
+        </article>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <article class="stat-card">
+            <span class="stat-label">Departments</span>
+            <strong>{{ total_departments }}</strong>
+            <span class="stat-icon purple">D</span>
+        </article>
+    </div>
+</div>
+
+<section class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center py-3 px-4">
+        <div>
+            <h2 class="h5 mb-1">Recently added employees</h2>
+            <p class="text-muted small mb-0">The five most recently created employee records</p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr><th class="ps-4">Employee</th><th>Employee ID</th><th>Department</th><th>Designation</th><th>Status</th><th class="pe-4">Joined</th></tr>
+            </thead>
+            <tbody>
+                {% for employee in recent_employees %}
+                    <tr>
+                        <td class="ps-4"><div class="d-flex align-items-center gap-2">{% if employee.profile_photo %}<img class="employee-avatar" src="{{ employee.profile_photo.url }}" alt="{{ employee.first_name }}">{% else %}<span class="employee-avatar placeholder-avatar">{{ employee.first_name|first|upper }}</span>{% endif %}<span><strong>{{ employee.first_name }} {{ employee.last_name }}</strong><small class="d-block text-muted">{{ employee.email }}</small></span></div></td>
+                        <td>{{ employee.employee_id }}</td>
+                        <td>{{ employee.department.name }}</td>
+                        <td>{{ employee.designation }}</td>
+                        <td><span class="badge {% if employee.status == 'Active' %}text-bg-success{% else %}text-bg-secondary{% endif %}">{{ employee.status }}</span></td>
+                        <td class="pe-4">{{ employee.joining_date|date:'d M Y' }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td class="text-center py-5 text-muted" colspan="6">No employees have been added yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

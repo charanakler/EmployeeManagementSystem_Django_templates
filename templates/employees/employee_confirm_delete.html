@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Employee | Employee Management{% endblock %}
+{% block page_heading %}Delete employee{% endblock %}
+
+{% block content %}
+<section class="card border-0 shadow-sm"><div class="card-body p-4"><h2 class="h5 text-danger">Delete {{ employee.first_name }} {{ employee.last_name }}?</h2><p class="text-muted">This will permanently remove the employee record. This action cannot be undone.</p><form method="post">{% csrf_token %}<button class="btn btn-danger" type="submit">Yes, delete employee</button><a class="btn btn-outline-secondary" href="{% url 'employees:employee_detail' employee.pk %}">Cancel</a></form></div></section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ employee.first_name }} {{ employee.last_name }} | Employee Management{% endblock %}
+{% block page_heading %}Employee profile{% endblock %}
+{% block header_actions %}<div class="d-flex gap-2"><a class="btn btn-outline-secondary" href="{% url 'employees:employee_edit' employee.pk %}">Edit</a><a class="btn btn-outline-danger" href="{% url 'employees:employee_delete' employee.pk %}">Delete</a></div>{% endblock %}
+
+{% block content %}
+<section class="card border-0 shadow-sm"><div class="card-body p-4 p-md-5"><div class="row g-4"><div class="col-md-4 text-center border-md-end">
+    {% if employee.profile_photo %}<img class="rounded-circle object-fit-cover mb-3" width="150" height="150" src="{{ employee.profile_photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">{% else %}<div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width:150px;height:150px;font-size:3rem">{{ employee.first_name|first|upper }}</div>{% endif %}
+    <h2 class="h4 mb-1">{{ employee.first_name }} {{ employee.last_name }}</h2><p class="text-muted">{{ employee.designation }}</p><span class="badge {% if employee.status == 'Active' %}text-bg-success{% else %}text-bg-secondary{% endif %}">{{ employee.status }}</span>
+</div><div class="col-md-8"><h3 class="h5 border-bottom pb-2">Employee information</h3><dl class="row mb-0">
+    <dt class="col-sm-4">Employee ID</dt><dd class="col-sm-8">{{ employee.employee_id }}</dd><dt class="col-sm-4">Email</dt><dd class="col-sm-8">{{ employee.email }}</dd><dt class="col-sm-4">Phone</dt><dd class="col-sm-8">{{ employee.phone }}</dd><dt class="col-sm-4">Gender</dt><dd class="col-sm-8">{{ employee.gender }}</dd><dt class="col-sm-4">Date of birth</dt><dd class="col-sm-8">{{ employee.date_of_birth|date:'d M Y' }}</dd><dt class="col-sm-4">Address</dt><dd class="col-sm-8">{{ employee.address|linebreaksbr }}</dd><dt class="col-sm-4">Department</dt><dd class="col-sm-8">{{ employee.department.name }}</dd><dt class="col-sm-4">Salary</dt><dd class="col-sm-8">{{ employee.salary }}</dd><dt class="col-sm-4">Joining date</dt><dd class="col-sm-8">{{ employee.joining_date|date:'d M Y' }}</dd>
+</dl></div></div></div></section>
+<a class="btn btn-link mt-3 px-0" href="{% url 'employees:employee_list' %}">← Back to employees</a>
+{% endblock %}
